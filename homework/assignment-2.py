@@ -6,9 +6,9 @@ import numpy as np
 # install matplotlib first by running: pip3 install matplotlib
 import matplotlib.pyplot as plt
 
-print('Euler Simulation - Stochastic Differential Equation')
+print('Milstein Discretization - Simulation - Stochastic Differential Equation')
 
-def euler_simulation(numberOfTrajectories, numberOfSteps):
+def milstein_simulation(numberOfTrajectories, numberOfSteps):
     # Number of trajectories by series
     # Number of step to simulate
 
@@ -46,8 +46,8 @@ def euler_simulation(numberOfTrajectories, numberOfSteps):
     # Loop and simulate all steps
     for i in range(numberOfTrajectories):
         for t in range(numberOfSteps):
-            increment = ((a - ((b**2) / 2)) * dT) + (b * dW[i][t+1])
-            trajectories[i][t+1] = trajectories[i][t] * math.exp(increment)
+            factor = 1 + (a * dT) + (b * dW[i][t]) + ((1/2) * (b**2) * ((dW[i][t]**2) - dT))
+            trajectories[i][t+1] = trajectories[i][t] * factor
 
     # print(trajectories)
 
@@ -56,4 +56,4 @@ def euler_simulation(numberOfTrajectories, numberOfSteps):
 
     plt.show()
 
-euler_simulation(10, 10)
+milstein_simulation(10, 10)
